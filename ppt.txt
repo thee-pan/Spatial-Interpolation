@@ -1,0 +1,52 @@
+# Spatial Interpolation.py
+
+
+class DataSet: Prepares data set
+        read_data() = takes data from file
+        unknown_points_data = comverts unknown point into list
+
+
+class Point: 
+        append_x_y_coordinates = processing data for unknown point
+
+
+class DataPoint:  
+        arrange_data = appends coordinates and values into a list
+
+
+class Prepare_Data:
+        prepare_interpolation_data = inserts the distance of unknown point from each point to a tuple then sorts the tuple and returns the values in ascending order 
+
+
+class Nearest_neighbour:
+        nearest_neighbour_k = finds interpolated data using k nearest neigbour method.
+        nearest_neighbour_radius = finds interpolated data using radial neigbour method.
+
+
+class IDW:
+        inverse_distance_weighted = finds interpolated value using idw method
+
+
+class interpolate:
+        display_IDW = prints idw value
+        choice_knn_krr = returns by what method the interpolated value use wants to find out : knn or radial k
+        display_k_nearest_neighbour = prints k nearest neighbour value
+        display_radial_nearest_neighbour = prints radial nearest neighbour
+
+
+
+
+##############################################################
+How to use:
+
+1- import spatial interpolation file
+2- create object of DataSet class present inside spatial interpolation file
+3- call read_data function to read data from file and provide the file name
+4- call unknown_points_data and send latitude longitude to form a unknown point list
+5- create object of Prepare_Data class 
+6- call prepare_interpolation_data to get the data along with the appended distance
+7- create object of Interpolate class 
+8- call display_IDW method to display method using IDW method
+9- call choice_knn_krr to choose whether to use knn or rka
+
+
