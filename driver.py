@@ -3,7 +3,7 @@ import spatial_interpolation as sp
 
 #user work
 ds = sp.DataSet()
-known_points = ds.read_data('data.txt')
+known_points = ds.read_data('data2.txt')
 
 unknown_lat = float(input("Enter unknown point latitude: "))
 unknown_long = float(input("Enter unknown longitude: "))

@@ -1,6 +1,6 @@
 import numpy as np
 
-
+############################### DATA PROCESSING ################################################
 class DataSet:
     def __init__(self):
         pass
@@ -62,7 +62,6 @@ class Prepare_Data:
     def __init__(self, unknown_point, input):
           self.unknown_point = unknown_point
           self.input = input
-
     def prepare_interpolation_data(self):
         vals = [z[1] for z in self.input]  # making an array of the given values
         # finding and appending the distance of each point from the unknown point
@@ -75,13 +74,17 @@ class Prepare_Data:
                         for i in range(len(dist))]
       
         # sorting the tuple on the distance
-        input_final.sort(key=lambda input_final: input_final[0][1])
+        input_final = sorted(input_final, key=lambda x: x[0][1], reverse=True)
+        print("######")
+        print(input_final)
+        print("#####")
         return input_final
     
 
 """
     To find the value of unknown point using nearest neighbour method
 """
+############################### NEAREST NEIGHBOUR ################################################
 
 
 class Nearest_neighbour:
@@ -123,23 +126,11 @@ class Nearest_neighbour:
         return avg/len(radial_neighbour)
 
 
+############################### IDW ################################################
+
 class IDW:
   """
       To return value of unknown point using inverse distance weighted method
-      
-      Input:
-        input: a list of lists where each element list contains 
-          four values: X, Y, Value, and Distance to target
-          point.
-          
-        power_factor : should be greater than or equal to 1
-      
-      Functions/Methods:
-        __init__(self,input,power_factor) : to initialize the class variables
-        inverse_distance_weighted(self): to calculate and return the estimated value by inverse distance weighted method
-        
-      Output:
-        Estimated value at the target location.
       """
 
   def __init__(self, input, power_factor):
@@ -147,21 +138,22 @@ class IDW:
       self.power_factor = power_factor
 
   def inverse_distance_weighted(self):
-      weighted_input = 0.0                # sum of weighted z
+      weighted_prod = 0.0                # sum of weighted z
       weighted_sum = 0.0                # sum of weights
       N = len(self.input)              # number of points in the data
 
       for i in range(N):
           distance = self.input[i][1]
           if distance == 0:
-              return self.input[i][1]
+              return self.input[i][0][2]
           weight = 1.0/(distance**self.power_factor)
           weighted_sum += weight
-          weighted_input += weight*self.input[i][1]
-      return weighted_input/weighted_sum
+          weighted_prod += weight*self.input[i][0][2]
+      return weighted_prod/weighted_sum
   
 
 
+############################## SPATIAL INTERPOLATION METHODS ###################################
 class Interpolate:
     def __init__(self,dataset,unknown_val):
         self.dataset = dataset
@@ -211,9 +203,8 @@ class Interpolate:
     def display_radial_nearest_neighbour(self,radius):
         nn = Nearest_neighbour(self.dataset, radius = radius)
         nnr_val = nn.nearest_neighbour_radius()
-        print("nnr_val = ", nnr_val)
         print()
-        print(f"Given dataset: {self.dataset}")
+        print(f"Given dataset: {self.dataset}\n\n")
         print(f"Point for which data is to b predicted: {self.unknown_val}")
         print()
         print(f"Spatial interpolation using radial nearest neighbour: ")
